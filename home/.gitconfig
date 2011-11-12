@@ -1,0 +1,35 @@
+[merge]
+    tool = opendiff
+	summary = true
+[color]
+	interactive = auto
+	branch = auto
+	status = auto
+	ui = true
+#	diff = auto
+[pager]
+#	status = true
+[user]
+	name = Willem Deconinck
+	email = ir.willem.deconinck@gmail.com
+[core]
+	excludesfile = ~/.gitignore
+	editor = mate -wl1
+[http]
+	sslVerify = false
+[alias]
+	st = status
+	co = checkout
+	rv = checkout -- 
+	spush = "!bash -c 'git svn dcommit;' -"
+	sfetch = "!bash -c 'git svn fetch' -"
+	up = "!bash -c 'git svn rebase;' -"
+	update = "!bash -c 'git svn rebase;' -"
+	aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
+	last = log -1 HEAD
+	diffx = !bash -c 'git diff $1 $2 $3 $4 $5 $6 $7 | gitx' -
+	v = !bash -c 'gitx --all' -
+	spull = "!bash -c 'git svn rebase;' -"
+	lost = !gitk --all $( git fsck --no-reflog | awk '/dangling commit/ {print $3}' )&
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	count = "!bash -c 'git log | grep "^commit" | wc -l' -"
