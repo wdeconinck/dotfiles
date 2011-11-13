@@ -173,7 +173,12 @@ export PATH=/usr/local/bin:$PATH
 # FUNCTIONS
 ############################################################################
 
-# # build & run target
+function install-homebrew
+{
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.github.com/gist/323731)"
+}
+
+# build & run target
 function br  
 { 
     make -j2 $1 && mpirun -np 1 $1 
