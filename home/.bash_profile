@@ -3,17 +3,61 @@ alias reload="source $HOME/.bash_profile"
 alias profile="mate $HOME/.bash_profile"
 
 ############################################################################
-# CONFIG
+# SOURCES
 ############################################################################
 
 if [ -f ~/.inputrc ]; then
     . ~/.inputrc
 fi
 
+if [ -f ~/.bash_extra ]; then
+    . ~/.bash_extra
+fi
+
+export PYTHONSTARTUP=~/.pystartup.py
+
+############################################################################
+# PATH
+############################################################################
+
+# Doxygen path
+export PATH=/Applications/Doxygen.app/Contents/Resources:$PATH
+# user local path
+export PATH=/usr/local/bin:$PATH
+
+############################################################################
+# FUNCTIONS
+############################################################################
+
+#install homebrew
+function install-homebrew
+{
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.github.com/gist/323731)"
+}
+
+# build & run target
+function br  
+{ 
+    make -j2 $1 && mpirun -np 1 $1 
+}
+function br2 
+{ 
+    make -j2 $1 && mpirun -np 2 $1 
+}
+function ssh-setup
+{ 
+    cat ~/.ssh/id_rsa.pub | ssh $1 'mkdir -p ~/.ssh; cat - >> ~/.ssh/authorized_keys' 
+}
+
+command_exists () {
+    type "$1" &> /dev/null ;
+}
+
 # quicklook a document
 ql() {
 	qlmanage -p "$@" >& /dev/null &
 }
+
 
 #rsync with progress and compression
 alias rsync="rsync -avz --progress "
@@ -28,7 +72,9 @@ alias lib='echo $DYLD_LIBRARY_PATH'
 alias eject="drutil eject"  # or "drutil tray open"
 
 # git alias uses hub instead of git
-alias git=hub
+if command_exists hub ; then
+    alias git=hub
+fi
 source ~/.git-completion.bash
 #git enhanced
 export GIT_PS1_SHOWDIRTYSTATE=1
@@ -139,10 +185,12 @@ alias pumpitup="osascript -e 'set volume 10'"
 alias hax="growlnotify -a 'Activity Monitor' 'System error' -m 'WTF R U DOIN'"
 
 # Editor = TextMate
-export EDITOR='mate -w'           # waits until file is closed again
-export SVN_EDITOR='mate -w'       # same
-export GIT_EDITOR='mate -wl1'     # moves cursor to first line
-export LESSEDIT='mate -l %lm %f'  # press "v" during less
+if command_exists mate; then
+    export EDITOR='mate -w'           # waits until file is closed again
+    export SVN_EDITOR='mate -w'       # same
+    export GIT_EDITOR='mate -wl1'     # moves cursor to first line
+    export LESSEDIT='mate -l %lm %f'  # press "v" during less
+fi
 
 # grep command
 export GREP_OPTIONS="--colour=auto"
@@ -155,49 +203,3 @@ XTITLE="\[\e]0;\w\a\]" ;;
 XTITLE="" ;;
 esac
 export PS1="$XTITLE"'\[\e[0;36m\][\[\e[38;3m\]\h \[\e[38;3m\]\A \[\e[32;1m\]\W\[\e[0m\]\[\e[0;36m\]$(__git_ps1 " -- ")\[\e[0m\]\[\e[31;1m\]$(__git_ps1 "%s")\[\e[0m\]\[\e[0;36m\]] \[\e[0m\]'
-
-# bind "set show-all-if-ambiguous on"
-bind "set completion-ignore-case on"
-
-############################################################################
-# PATH
-############################################################################
-
-# Doxygen path
-export PATH=/Applications/Doxygen.app/Contents/Resources:$PATH
-# user local path
-export PATH=/usr/local/bin:$PATH
-
-
-############################################################################
-# FUNCTIONS
-############################################################################
-
-function install-homebrew
-{
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.github.com/gist/323731)"
-}
-
-# build & run target
-function br  
-{ 
-    make -j2 $1 && mpirun -np 1 $1 
-}
-function br2 
-{ 
-    make -j2 $1 && mpirun -np 2 $1 
-}
-function ssh-setup
-{ 
-    cat ~/.ssh/id_rsa.pub | ssh $1 'mkdir -p ~/.ssh; cat - >> ~/.ssh/authorized_keys' 
-}
-
-############################################################################
-# SOURCES
-############################################################################
-
-export PYTHONSTARTUP=~/.pystartup.py
-
-if [ -f ~/.bash_extra ]; then
-    . ~/.bash_extra
-fi
