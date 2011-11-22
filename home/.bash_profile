@@ -6,10 +6,10 @@ alias profile="mate $HOME/.bash_profile"
 # SOURCES
 ############################################################################
 
-if [ -f ~/.inputrc ]; then
-    . ~/.inputrc
-fi
-
+# if [ -f ~/.inputrc ]; then
+#     . ~/.inputrc
+# fi
+# 
 if [ -f ~/.bash_extra ]; then
     . ~/.bash_extra
 fi
@@ -43,6 +43,10 @@ function br
 function br2 
 { 
     make -j2 $1 && mpirun -np 2 $1 
+}
+function bvr  
+{ 
+    make -j2 $1 && valgrind --leak-check=yes mpirun --dsymutil=yes -np 1 $1
 }
 function ssh-setup
 { 
