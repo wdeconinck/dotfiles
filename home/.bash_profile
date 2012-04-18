@@ -1,6 +1,6 @@
 # reload this profile
 alias reload="source $HOME/.bash_profile"
-alias profile="mate $HOME/.bash_profile"
+alias profile="edit $HOME/.bash_profile"
 
 ############################################################################
 # SOURCES
@@ -24,6 +24,7 @@ export PYTHONSTARTUP=~/.pystartup.py
 export PATH=/Applications/Doxygen.app/Contents/Resources:$PATH
 # user local path
 export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/share/python:$PATH
 
 ############################################################################
 # FUNCTIONS
@@ -62,6 +63,18 @@ ql() {
 	qlmanage -p "$@" >& /dev/null &
 }
 
+function ssh-tunnel-on
+{
+	ssh -D 8080 -f -C -q -N $1
+	networksetup -setsocksfirewallproxy Wi-Fi localhost 8080
+	networksetup -setsocksfirewallproxystate Wi-Fi on
+}
+
+function ssh-tunnel-off
+{
+	# kill $SSH_TUNNEL
+	networksetup -setsocksfirewallproxystate Wi-Fi off
+}
 
 #rsync with progress and compression
 alias rsync="rsync -avz --progress "
@@ -69,12 +82,19 @@ alias rsync="rsync -avz --progress "
 # gnuplot shortcut
 alias gp=gnuplot
 
+# ipython with console, and pylab, good matlab replacement
+alias pylab='ipython qtconsole --pylab=inline'
+
 # other alias
 alias wifi='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s'
 alias path='echo $PATH'
 alias lib='echo $DYLD_LIBRARY_PATH'
 alias eject="drutil eject"  # or "drutil tray open"
-
+if command_exists mate; then
+    alias edit='mate'
+else
+    alias edit='open -e'
+fi
 # git alias uses hub instead of git
 if command_exists hub ; then
     alias git=hub
