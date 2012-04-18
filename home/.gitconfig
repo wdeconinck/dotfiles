@@ -11,7 +11,7 @@
 #	status = true
 [user]
 	name = Willem Deconinck
-	email = ir.willem.deconinck@gmail.com
+	email = wdeconinck@me.com
 [core]
 	excludesfile = ~/.gitignore
 	editor = mate -wl1
