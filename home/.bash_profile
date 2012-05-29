@@ -33,7 +33,7 @@ export PATH=/usr/local/share/python:$PATH
 #install homebrew
 function install-homebrew
 {
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.github.com/gist/323731)"
+     /usr/bin/ruby -e "$(/usr/bin/curl -fksSL https://raw.github.com/mxcl/homebrew/master/Library/Contributions/install_homebrew.rb)"
 }
 
 # build & run target
