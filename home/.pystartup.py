@@ -1,9 +1,29 @@
 import sys
 import os
 import atexit
-import rlcompleter
+
+
 import readline
-readline.parse_and_bind("tab: complete")
+import rlcompleter
+
+### Indenting
+class TabCompleter(rlcompleter.Completer):
+    """Completer that supports indenting"""
+    def complete(self, text, state):
+        if not text:
+            return ('    ', None)[state]
+        else:
+            return rlcompleter.Completer.complete(self, text, state)
+
+readline.set_completer(TabCompleter().complete)
+
+### Add autocompletion
+if 'libedit' in readline.__doc__:
+    readline.parse_and_bind("bind -e")
+    readline.parse_and_bind("bind '\t' rl_complete")
+else:
+    readline.parse_and_bind("tab: complete")
+
 
 
 historyPath = os.path.expanduser("~/.pyhistory")
