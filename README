@@ -1,0 +1,3 @@
+cd $HOME
+git://github.com/wdeconinck/dotfiles.git .dotfiles
+.dotfiles/install.sh
