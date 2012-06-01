@@ -25,7 +25,6 @@ else:
     readline.parse_and_bind("tab: complete")
 
 
-
 historyPath = os.path.expanduser("~/.pyhistory")
 
 def save_history(historyPath=historyPath):
@@ -38,4 +37,4 @@ if os.path.exists(historyPath):
 atexit.register(save_history)
 
 # anything not deleted (sys and os) will remain in the interpreter session
-del atexit, readline, rlcompleter, save_history, historyPath
+del atexit, save_history, historyPath
