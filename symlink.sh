@@ -23,6 +23,18 @@ function dryrun () {
 
 ###############################################################################################
 
+function absolute_path()
+{
+  # remove trailing slash
+  path=$( echo "$1" | sed -e "s/\/*$//" )
+  # make absolute
+  [ "${path/#\//}" != "$path" ] || path="$PWD/$path"
+  # return
+  echo $path
+}
+
+###############################################################################################
+
 function symlink()
 {
   if [ ! -z "$1" ]; then
@@ -48,8 +60,8 @@ function symlink()
     # target is the planned home directory link
     # purefile name is needed in case we work with a prefix
   
-    target_base="`basename ${file%.symlink*}`"
-    purefilename="`basename ${file%.symlink*}`"
+    target_base="`basename ${file%.symlink}`"
+    purefilename="`basename ${file%.symlink}`"
       
     if [[ "$target_base" == *.dotfile* ]]; then
       target_base=".${target_base%.dotfile*}"
@@ -161,9 +173,8 @@ function recursive_symlink()
 # main execution
 
 if [ ! -z "$1" ]; then
-  prefix="$PWD/$1"
+  prefix=$(absolute_path $1)
 else
   prefix=$PWD
 fi
-
 recursive_symlink $prefix

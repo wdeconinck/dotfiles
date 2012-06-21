@@ -4,7 +4,7 @@
 DOTFILES="$( cd "$( dirname "$0" )" && pwd)"
 echo "Installing dotfiles from $DOTFILES into $HOME"
 
-$DOTFILES/decrypt.sh
-$DOTFILES/symlink.sh
+$DOTFILES/decrypt.sh $DOTFILES
+$DOTFILES/symlink.sh $DOTFILES
 
 echo "Done"

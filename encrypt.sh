@@ -11,6 +11,18 @@ GREY="\033[0;37m"
 COLORRESET="\033[0m"
 SPACER="   "
 
+###############################################################################################
+
+function absolute_path()
+{
+  # remove trailing slash
+  path=$( echo "$1" | sed -e "s/\/*$//" )
+  # make absolute
+  [ "${path/#\//}" != "$path" ] || path="$PWD/$path"
+  # return
+  echo $path
+}
+
 ##########################################################################################
 
 function encrypt_file()
@@ -21,6 +33,8 @@ function encrypt_file()
   tar -C $filedir -jcf $file.tbz2 $filename && openssl des3 -a -pass "env:pw" -in $file.tbz2 -out $file.encrypted && rm $file.tbz2
   return 1
 }
+
+##########################################################################################
 
 function encrypt()
 {
@@ -53,7 +67,7 @@ function encrypt()
 # main execution
 
 if [ ! -z "$1" ]; then
-  prefix=$PWD/$1
+  prefix=$(absolute_path "$1")
 else
   prefix=$PWD
 fi

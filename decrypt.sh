@@ -13,6 +13,18 @@ SPACER="   "
 
 ###############################################################################################
 
+function absolute_path()
+{
+  # remove trailing slash
+  path=$( echo "$1" | sed -e "s/\/*$//" )
+  # make absolute
+  [ "${path/#\//}" != "$path" ] || path="$PWD/$path"
+  # return
+  echo $path
+}
+
+###############################################################################################
+
 function command_exists() 
 { 
   type "$1" &> /dev/null
@@ -74,7 +86,7 @@ function decrypt()
 # main execution
 
 if [ ! -z "$1" ]; then
-  prefix=$PWD/$1
+  prefix=$(absolute_path "$1")
 else
   prefix=$PWD
 fi
