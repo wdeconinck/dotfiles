@@ -23,15 +23,14 @@ function dryrun () {
 
 ###############################################################################################
 
-function symlink()
-{
+function symlink() {
   if [ ! -z "$1" ]; then
     prefix=$1
   else
     prefix=$PWD
   fi
 
-  if  [ $(find $prefix -name '*.symlink' -or -name '*.symlink.private' -maxdepth 1 | wc -l) != 0 ]; then
+  if [ $(find $prefix -maxdepth 1 -name '*.symlink' -or -name '*.symlink.private' | wc -l) != 0 ]; then
     echo -e "$GREEN-$COLORRESET found some .symlink files in $prefix, start symlinking"
   else
     echo -e "$RED-$COLORRESET found no .symlink files in $prefix, nothing to symlink"
@@ -43,7 +42,7 @@ function symlink()
   skipall=false
   backupdir=$prefix/backup
 
-  for file in $(find $prefix -name '*.symlink' -or -name '*.symlink.private' -maxdepth 1); do 
+  for file in $(find $prefix -maxdepth 1 -name '*.symlink' -or -name '*.symlink.private'); do 
 
     # target is the planned home directory link
     # purefile name is needed in case we work with a prefix
@@ -152,7 +151,7 @@ function recursive_symlink()
   
   # recurse
   current_dir_base=`basename $current_dir`
-  for dir in $(find $current_dir -type d -not -name $(basename $current_dir) -not -name .git -maxdepth 1); do
+  for dir in $(find $current_dir -maxdepth 1 -type d -not -name $(basename $current_dir) -not -name .git); do
     recursive_symlink $dir
   done
 }
