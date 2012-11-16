@@ -14,7 +14,6 @@
 	email = wdeconinck@me.com
 [core]
 	excludesfile = ~/.gitignore
-	editor = mate -wl1
 [http]
 	sslVerify = false
 [alias]
