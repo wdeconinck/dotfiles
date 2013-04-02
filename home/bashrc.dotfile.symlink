@@ -1,5 +1,17 @@
+echo "starting $HOME/.bashrc"
+
 # reload this profile
-alias reload="source $HOME/.bashrc"
+function reload
+{
+  echo 'reloading'
+  if [ -f ~/.bash_profile ]; then
+    . ~/.bash_profile
+  else
+    echo 'sourcing bashrc'
+    . ~/.bashrc
+  fi
+}
+
 alias profile="edit $HOME/.bashrc"
 
 ############################################################################
@@ -254,3 +266,7 @@ XTITLE="\[\e]0;\w\a\]" ;;
 XTITLE="" ;;
 esac
 export PS1="$XTITLE"'\[\e[0;36m\][\[\e[38;3m\]\h \[\e[38;3m\]\A \[\e[32;1m\]\W\[\e[0m\]\[\e[0;36m\]$(__git_ps1 " -- ")\[\e[0m\]\[\e[31;1m\]$(__git_ps1 "%s")\[\e[0m\]\[\e[0;36m\]] \[\e[0m\]'
+
+if [ -f ~/.user_bashrc ]; then
+    source ~/.user_bashrc
+fi
