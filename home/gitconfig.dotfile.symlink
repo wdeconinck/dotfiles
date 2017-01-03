@@ -11,7 +11,7 @@
 #	status = true
 [user]
 	name = Willem Deconinck
-	email = wdeconinck@me.com
+	email = willem.deconinck@ecmwf.int
 [core]
 	excludesfile = ~/.gitignore
 [http]
@@ -27,3 +27,11 @@
 	hist = log --graph --pretty=format:'%C(red)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 [include]
     path = .gitconfig_user
+[push]
+	default = simple
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
