@@ -1,5 +1,5 @@
 [merge]
-    tool = opendiff
+	tool = p4m
 	summary = true
 [color]
 	interactive = auto
@@ -14,6 +14,8 @@
 	email = willem.deconinck@ecmwf.int
 [core]
 	excludesfile = ~/.gitignore
+	pager = less -MIRx2
+	preloadindex = true
 [http]
     sslVerify = false
 [alias]
@@ -35,3 +37,6 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[mergetool]
+	keepTemporaries = false
+	prompt = false

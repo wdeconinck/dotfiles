@@ -1,4 +1,6 @@
-echo "starting $HOME/.bashrc"
+if [[ $- =~ "i" ]]; then
+  echo "starting $HOME/.bashrc"
+fi
 
 # reload this profile
 function reload
@@ -198,7 +200,7 @@ export LSCOLORS=ExBxFxDxcxegedabagacad
 if [[ $(uname) == Darwin ]]; then
     alias ls="command ls -pG"
 elif [[ $(uname) == Linux ]]; then
-    alias ls="command ls --color -p"
+    alias ls="command ls --color=auto -p"
 fi
 
 alias ll="ls -ghp"      # list view
