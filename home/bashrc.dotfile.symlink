@@ -297,7 +297,7 @@ export GREP_OPTIONS="--colour=auto"
 
 bash_prompt_command() {
 # How many characters of the $PWD should be kept
-local pwdmaxlen=55
+local pwdmaxlen=132
 # Indicate that there has been dir truncation
 local trunc_symbol=".."
 local dir=${PWD##*/}
