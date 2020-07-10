@@ -6,6 +6,7 @@
 	branch = auto
 	status = auto
 	ui = true
+	diff = auto
 #	diff = auto
 [pager]
 #	status = true
@@ -16,6 +17,9 @@
 	excludesfile = ~/.gitignore
 	pager = less -MIRx2
 	preloadindex = true
+	editor = vim
+	autocrlf = input
+	whitespace = blank-at-eol,blank-at-eof,space-before-tab,tab-in-indent
 [http]
     sslVerify = false
 [alias]
@@ -27,6 +31,17 @@
 	lost = !gitk --all $( git fsck --no-reflog | awk '/dangling commit/ {print $3}' )&
 	count = "!bash -c 'git log | grep "^commit" | wc -l' -"
 	hist = log --graph --pretty=format:'%C(red)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	bothbranch = "!f() { git scriptsbranch $@ ; git sourcebranch $@ ; } ; f"
+	br = branch
+	ci = commit
+	di = diff
+	ignored = ls-files -o -i --exclude-standard
+	logc = log -p --pretty=oneline --abbrev-commit
+	scriptsbranch = "!f() { cd ~/ifs-scripts.git ; git ifsbranch $@ ; } ; f"
+	sourcebranch = "!f() { cd ~/ifs-source.git ; git ifsbranch $@ ; } ; f"
+	staged = diff --staged
+	unstage = reset HEAD --
+	up = rebase
 [include]
     path = .gitconfig_user
 [push]
